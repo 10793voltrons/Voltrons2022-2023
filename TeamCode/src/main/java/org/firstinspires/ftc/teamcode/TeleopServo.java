@@ -20,7 +20,6 @@ public class TeleopServo extends LinearOpMode {
     DcMotor leftBack;
     DcMotor rightBack;
 
-    //DcMotor duckArm;
     DcMotor arm;
 
     Servo leftClaw;
@@ -49,9 +48,6 @@ public class TeleopServo extends LinearOpMode {
     ElapsedTime yButton2 = new ElapsedTime();
 
     ElapsedTime armDelay = new ElapsedTime();
-
-
-
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -169,13 +165,10 @@ public class TeleopServo extends LinearOpMode {
             // Brazo
             if (gamepad2.left_trigger > 0) /* && armDelay.milliseconds() > 20) */{
                 arm.setPower(-linearSlidePowerMultiplier);
-                //armDelay.reset();
             }
             else if (gamepad2.right_trigger > 0)/* && armDelay.milliseconds() > 20)*/ {
                 arm.setPower(linearSlidePowerMultiplier);
-                //armDelay.reset();
             }
-
             else {
                 arm.setPower(0);
             }
@@ -185,14 +178,9 @@ public class TeleopServo extends LinearOpMode {
             telemetry.addData("Left Claw Position", leftClaw.getPosition());
             telemetry.addData("Right Claw Position", rightClaw.getPosition());
             telemetry.addData("Wrist Position", wrist.getPosition());
-            //telemetry.addData("Ankle", ankle.getPosition());
-            //telemetry.addData("Error", error);
-            //telemetry.addData("Arm Power", armPower);
             telemetry.addData("Arm position", arm.getCurrentPosition());
-            //telemetry.addData("Position Goal", position_goal);
             telemetry.addData("Slow Mode", adjust == 4);
             telemetry.update();
-
         }
     }
 }
