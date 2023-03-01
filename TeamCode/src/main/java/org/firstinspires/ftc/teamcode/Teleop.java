@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //@Config
-@TeleOp(name = "Driver", group = "opmode")
+@TeleOp(name = "Driver", group = "opMode")
 public class Teleop extends LinearOpMode {
 
     // Primero declaramos todas las variables que vamos a usar
@@ -21,7 +21,6 @@ public class Teleop extends LinearOpMode {
     DcMotor leftBack;
     DcMotor rightBack;
 
-    DcMotor duckArm;
     DcMotor arm;
 
     Servo leftClaw;
@@ -46,9 +45,6 @@ public class Teleop extends LinearOpMode {
 
     ElapsedTime armDelay = new ElapsedTime();
 
-
-
-
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -58,7 +54,6 @@ public class Teleop extends LinearOpMode {
         leftBack = hardwareMap.dcMotor.get("bl");
         rightBack = hardwareMap.dcMotor.get("br");
 
-        duckArm = hardwareMap.dcMotor.get("duck");
         arm = hardwareMap.dcMotor.get("arm");
 
         leftClaw = hardwareMap.servo.get("lcl");
@@ -132,17 +127,6 @@ public class Teleop extends LinearOpMode {
                 yButton.reset();
             }
 
-            // Los bumpers de un control, regresan un valor entre 0 y 1. Entonces tenemos que asignar poder dependiendo de eso
-            if (gamepad1.right_bumper) {
-                duckArm.setPower(0.05);
-            } else if (gamepad1.left_bumper) {
-                duckArm.setPower(-0.05);
-            } else {
-                // Si ninguno de los dos botones estan siendp presionados, lo apagamos
-                duckArm.setPower(0);
-            }
-
-
             // Jugador 2
 
             // Esto de los miliseconds, es un truco porque como el codigo se actauliza muy rapido, el darle un click a la x, haria que se corriera este pedazo de codigo como unas 15 veces. Haciendo un delay de 300 milisegundos evita esto
@@ -175,13 +159,9 @@ public class Teleop extends LinearOpMode {
             }
 
 
-            telemetry.addData("Duck Power", duckArm.getPower());
             telemetry.addData("Invert", invert);
             telemetry.addData("Left Claw Position", leftClaw.getPosition());
             telemetry.addData("Right Claw Position", rightClaw.getPosition());
-            //telemetry.addData("Ankle", ankle.getPosition());
-            //telemetry.addData("Error", error);
-            //telemetry.addData("Arm Power", armPower);
             telemetry.addData("Arm position", arm.getCurrentPosition());
             telemetry.addData("Position Goal", position_goal);
             telemetry.addData("Slow Mode", adjust == 4);
