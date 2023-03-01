@@ -21,6 +21,7 @@
 
 package org.firstinspires.ftc.teamcode.OpenCV;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -40,7 +41,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 
 import java.util.ArrayList;
 
-@TeleOp
+@Autonomous(name = "Park", group = "Auto")
 public class MangaDetect extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -73,7 +74,6 @@ public class MangaDetect extends LinearOpMode
     DcMotor leftBack;
     DcMotor rightBack;
 
-    DcMotor duckArm;
     DcMotor arm;
 
     Servo leftClaw;
@@ -82,11 +82,11 @@ public class MangaDetect extends LinearOpMode
     public static double gyroKp = 0.003;
     //Servo ankle;
 
-    public static double leftClawOpen = 0.30;
-    public static double leftClawClosed = 0.5;
+    public static double leftClawOpen = 0.50;
+    public static double leftClawClosed = 0.3;
 
-    public static double rightClawOpen = 0.35;
-    public static double rightClawClosed = 0.15;
+    public static double rightClawOpen = 0.15;
+    public static double rightClawClosed = 0.35;
 
     public static double ankleDivider = 100;
 
@@ -124,7 +124,6 @@ public class MangaDetect extends LinearOpMode
         leftBack = hardwareMap.dcMotor.get("bl");
         rightBack = hardwareMap.dcMotor.get("br");
 
-        duckArm = hardwareMap.dcMotor.get("duck");
         arm = hardwareMap.dcMotor.get("arm");
 
         leftClaw = hardwareMap.servo.get("lcl");
@@ -253,24 +252,39 @@ public class MangaDetect extends LinearOpMode
 
         //Hacer algo el robot
         /* DETECTA Y SE MUEVE */
+        leftClaw.setPosition(leftClawClosed);
+        rightClaw.setPosition(rightClawClosed);
+        sleep(500);
+        drive.rightTimed(0.3,800,180,0);
+        sleep(300);
 
-
-        if (tagOfInterest == null || tagOfInterest.id == izq){   //Si detecta que se tiene que poner en la posición 1 o no detecta nada
-            sleep(500);                                      // Espera medio segundo
-            drive.frontTimed(0.3, 2000, 180, gyroKp);  //camina para enfrente 2.6 sg
-            sleep(500);                                      // Espera medio segundo
-
-            //drive.frontTimed(0.3, 1800, 180, gyroKp);  //avanza hacia enfrente  hasta los tiles correctos
-        }else if( tagOfInterest.id == centro){                         //Si detecta que se tiene que poner en la posición 2 (centro)
-            //cosa para que se mueva a la pos 2
-
-        }else if(tagOfInterest.id == der){                               //Detecta posici[on 3 *derecha
-            //Cosa para que se mueva a la pos 3
+        if (tagOfInterest.id == izq){                                    //Si detecta que se tiene que poner en la posición 1 o no detecta nada
+            sleep(500);
+            drive.frontTimed(0.3, 1500, 180, 0);
+            sleep(500);
+            drive.setOrientation(0.3,270,4000);
+            sleep(500);
+            drive.frontTimed(0.3, 1500,270,0);
+        }else if(tagOfInterest == null || tagOfInterest.id == centro){  //Si detecta que se tiene que poner en la posición 2 (centro)
+            sleep(500);
+            drive.setOrientation(0.3,270,4000);
+            sleep(500);
+            drive.frontTimed(0.3,1600,270,0.0);
+            sleep(500);
+        }else if(tagOfInterest.id == der){                               //Detecta posición 3 *derecha
+            sleep(500);
+            drive.setOrientation(0.3,270,4000);
+            sleep(500);
+            drive.frontTimed(0.3,1300,270,0.0);
+            sleep(500);
+            drive.setOrientation(0.3,0,4000);
+            sleep(500);
+            drive.frontTimed(0.3,1450,0,0);
         }
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-        while (opModeIsActive()) {sleep(20);}
+ //       while (opModeIsActive()) {sleep(20);}
     }
 
     void tagToTelemetry(AprilTagDetection detection)
