@@ -26,11 +26,11 @@ public class TeleopServo extends LinearOpMode {
     Servo rightClaw;
     Servo wrist;
 
-    public static double leftClawOpen = 0.25;
-    public static double leftClawClosed = 0.5;
+    public static double leftClawClosed = 0.50;
+    public static double leftClawOpen = 0.35;
 
-    public static double rightClawOpen = 0.35;
     public static double rightClawClosed = 0.15;
+    public static double rightClawOpen = 0.3;
 
     public static double wristFront = 0;
     public static double wristLeft = 0.25;
@@ -156,7 +156,7 @@ public class TeleopServo extends LinearOpMode {
                 bButton.reset();
             }
             if(gamepad2.dpad_right){
-                wrist.setPosition(0.7);
+                wrist.setPosition(0.675);
                 yButton2.reset();
             }
 

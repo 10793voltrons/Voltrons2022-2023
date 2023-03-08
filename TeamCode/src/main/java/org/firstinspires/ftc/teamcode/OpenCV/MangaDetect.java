@@ -82,11 +82,11 @@ public class MangaDetect extends LinearOpMode
     public static double gyroKp = 0.003;
     //Servo ankle;
 
-    public static double leftClawOpen = 0.50;
-    public static double leftClawClosed = 0.3;
+    public static double leftClawClosed = 0.50;
+    public static double leftClawOpen = 0.35;
 
-    public static double rightClawOpen = 0.15;
-    public static double rightClawClosed = 0.35;
+    public static double rightClawClosed = 0.15;
+    public static double rightClawOpen = 0.3;
 
     public static double ankleDivider = 100;
 
@@ -159,10 +159,10 @@ public class MangaDetect extends LinearOpMode
         double k_p = 0.000;
 
         double position_goal = arm.getCurrentPosition();
-        double anklePosition = 0.39;
+        //double anklePosition = 0.39;
 
-        leftClaw.setPosition(leftClawOpen);
-        rightClaw.setPosition(rightClawOpen);
+        leftClaw.setPosition(leftClawClosed);
+        rightClaw.setPosition(rightClawClosed);
 
         Drive drive = new Drive(leftFront, leftBack, rightFront, rightBack, arm, imu);
 
@@ -252,34 +252,34 @@ public class MangaDetect extends LinearOpMode
 
         //Hacer algo el robot
         /* DETECTA Y SE MUEVE */
-        leftClaw.setPosition(leftClawClosed);
-        rightClaw.setPosition(rightClawClosed);
+        //leftClaw.setPosition(leftClawClosed);
+        //rightClaw.setPosition(rightClawClosed);
         sleep(500);
         drive.rightTimed(0.3,800,180,0);
         sleep(300);
 
         if (tagOfInterest.id == izq){                                    //Si detecta que se tiene que poner en la posición 1 o no detecta nada
             sleep(500);
-            drive.frontTimed(0.3, 1500, 180, 0);
+            drive.frontTimed(0.3, 1800, 180, 0);
             sleep(500);
             drive.setOrientation(0.3,270,4000);
             sleep(500);
-            drive.frontTimed(0.3, 1500,270,0);
+            drive.frontTimed(0.3, 2000,270,0);
         }else if(tagOfInterest == null || tagOfInterest.id == centro){  //Si detecta que se tiene que poner en la posición 2 (centro)
             sleep(500);
             drive.setOrientation(0.3,270,4000);
             sleep(500);
-            drive.frontTimed(0.3,1600,270,0.0);
+            drive.frontTimed(0.3,2000,270,0.0);
             sleep(500);
         }else if(tagOfInterest.id == der){                               //Detecta posición 3 *derecha
             sleep(500);
             drive.setOrientation(0.3,270,4000);
             sleep(500);
-            drive.frontTimed(0.3,1300,270,0.0);
+            drive.frontTimed(0.3,1500,270,0.0);
             sleep(500);
             drive.setOrientation(0.3,0,4000);
             sleep(500);
-            drive.frontTimed(0.3,1450,0,0);
+            drive.frontTimed(0.3,1800,0,0);
         }
 
 
